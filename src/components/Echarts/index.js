@@ -39,20 +39,20 @@ import echarts from './echarts.min';
 export default class App extends Component {
 // 预防过渡渲染
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const thisProps = this.props || {}
-    nextProps = nextProps || {}
-    if (Object.keys(thisProps).length !== Object.keys(nextProps).length) {
-      return true
-    }
-    for (const key in nextProps) {
-      if (JSON.stringify(thisProps[key]) != JSON.stringify(nextProps[key])) {
-        // console.log('props', key, thisProps[key], nextProps[key])
-        return true
-      }
-    }
-    return false
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const thisProps = this.props || {}
+  //   nextProps = nextProps || {}
+  //   if (Object.keys(thisProps).length !== Object.keys(nextProps).length) {
+  //     return true
+  //   }
+  //   for (const key in nextProps) {
+  //     if (JSON.stringify(thisProps[key]) != JSON.stringify(nextProps[key])) {
+  //       // console.log('props', key, thisProps[key], nextProps[key])
+  //       return true
+  //     }
+  //   }
+  //   return false
+  // }
 
   componentWillReceiveProps(nextProps) {
     // if(nextProps.option !== this.props.option) {
@@ -64,6 +64,7 @@ export default class App extends Component {
 
   render() {
     if (Platform.OS == 'android'){
+      const tplfile = Expo.Asset.fromModule(require('./tpl.html')).uri;
       return (
       <View style={{flex: 1, height: this.props.height || 400,}}>
         <WebView
@@ -74,7 +75,8 @@ export default class App extends Component {
             height: this.props.height || 400,
             backgroundColor: this.props.backgroundColor || 'transparent'
           }}
-          source={require('./tpl.html')}
+          // source={{uri: `tplfile`}}
+          source={{uri: Expo.Asset.fromModule(require('./tpl.html')).uri}}
           //source={{uri: 'file:///android_asset/tpl.html'}}
         />
       </View>
