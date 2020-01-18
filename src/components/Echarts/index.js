@@ -55,7 +55,7 @@ export default class App extends Component {
   //   return false
   // }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // if(nextProps.option !== this.props.option) {
     // 解决数据改变时页面闪烁的问题
     //this.refs.chart.reload()
