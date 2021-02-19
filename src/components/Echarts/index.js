@@ -64,41 +64,50 @@ export default class App extends Component {
   }
 
   render() {
-    if (Platform.OS == 'android'){
-      const tplfile = Expo.Asset.fromModule(require('./tpl.html')).uri;
-      return (
-      <View style={{flex: 1, height: this.props.height || 400,}}>
-        <WebView
-          ref="chart"
-          scrollEnabled = {false}
-          injectedJavaScript = {renderChart(this.props,true)}
-          style={{
-            height: this.props.height || 400,
-            backgroundColor: this.props.backgroundColor || 'transparent'
-          }}
-          // source={{uri: `tplfile`}}
-          source={{uri: Expo.Asset.fromModule(require('./tpl.html')).uri}}
-          //source={{uri: 'file:///android_asset/tpl.html'}}
-        />
-      </View>
-    );
-    }else{
-      return (
+    
+    return (
       <View style={{flex: 1, height: this.props.height || 400,}}>
         <WebView
           ref="chart"
           scrollEnabled = {false}
           scalesPageToFit={false}
           injectedJavaScript = {renderChart(this.props,true)}
+          // injectedJavaScript={js}
           style={{
             height: this.props.height || 400,
             backgroundColor: this.props.backgroundColor || 'transparent'
           }}
-          source={require('./tpl.html')}
+          onMessage={(data)=>{
+          }}
+          // source={require('./tpl.html')}
+          source={{html: `<!DOCTYPE html>
+                          <html>
+                            <head>
+                              <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+                              <title>echarts</title>
+                              <meta http-equiv="content-type" content="text/html; charset=utf-8">
+                              <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+                              <style type="text/css">
+                                html,body {
+                                  height: 100%;
+                                  width: 100%;
+                                  margin: 0;
+                                  padding: 0;
+                                  // overflow: hidden;
+                                }
+                                #main {
+                                  height: 100%;
+                                }
+                              </style>
+                            </head>
+                            <script>${echarts}</script>
+                            <body>
+                              <div id="main" ></div>
+                            <body>
+                          <html>`
+          }}
         />
       </View>
     );
-    }
-    
   }
 }
